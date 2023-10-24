@@ -17,7 +17,7 @@ class RushHour3DProblem(SearchProblem):
     def __init__(self, filas, columnas, pisos, salida, pieza_sacar, initial_state=None):
         self.filas = filas
         self.columnas = columnas
-        self.pisos = pisos
+        self.pisos = pisos - 1
         self.salida = salida
         self.pieza_sacar = pieza_sacar
 
@@ -112,7 +112,6 @@ class RushHour3DProblem(SearchProblem):
 
             return tuple(lista_piezas_totales)
 
-            
 
     def cost(self, state, action, state2):
         return 1
