@@ -46,8 +46,8 @@ class RushHour3DProblem(SearchProblem):
             if not resultado:
                 available_actions.append((id_pieza_a_mover, "derecha"))
 
-            if self.pisos > 1:
-                if piso == 1:
+            if self.pisos > 0:
+                if piso == 0:
                     available_actions.append((id_pieza_a_mover, "trepar"))
                 elif piso == self.pisos:
                     available_actions.append((id_pieza_a_mover, "caer"))
@@ -58,10 +58,10 @@ class RushHour3DProblem(SearchProblem):
         new_available_actions = [] # Creo una lista nueva para no modificar la original ya que la tengo que recorrer
 
         for action in available_actions:
-            estado_resultante = self.result(list(state), action)
+            estado_resultante = self.result(state, action)
 
-            for pieza in estado_resultante: # Recorro las pieza por pieza del estado resultante
-                id2, piso2, partes2 = pieza # Desestructuro
+            for pieza_resultante in estado_resultante: # Recorro las pieza por pieza del estado resultante
+                id2, piso2, partes2 = pieza_resultante # Desestructuro
                 flag = False # Hago una bandera para saber si hay piezas que se superponen
 
                 for parte in partes:
