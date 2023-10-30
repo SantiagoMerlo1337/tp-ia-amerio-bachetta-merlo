@@ -12,6 +12,20 @@ from simpleai.search.viewers import (BaseViewer, WebViewer)
 def distancia(a,b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
+def control_superposiciones(estado_resultante):
+        lista_partes = []
+        for pieza in estado_resultante:
+            id, piso, partes = pieza
+            for parte in partes:
+                lista_partes.append((parte, piso))
+        
+        valores_vistos = set(lista_partes)
+
+        if len(valores_vistos) == len(lista_partes):
+            return True
+        else:
+            return False
+
 class RushHour3DProblem(SearchProblem):
     
     def __init__(self, filas, columnas, pisos, salida, pieza_sacar, initial_state=None):
@@ -22,7 +36,6 @@ class RushHour3DProblem(SearchProblem):
         self.pieza_sacar = pieza_sacar
 
         super().__init__(initial_state)
-
 
     def actions(self, state): 
         available_actions = []
@@ -59,22 +72,11 @@ class RushHour3DProblem(SearchProblem):
 
         for action in available_actions:
             estado_resultante = self.result(state, action)
-
-            for pieza_resultante in estado_resultante: # Recorro las pieza por pieza del estado resultante
-                id2, piso2, partes2 = pieza_resultante # Desestructuro
-                flag = False # Hago una bandera para saber si hay piezas que se superponen
-
-                for parte in partes:
-                    for parte2 in partes2: # Recorro pieza por pieza del estado resultante de nuevo para corroborar cada coordenada con el resto
-                        if id2 != id_pieza_a_mover and parte == parte2 and piso == piso2: # Corroboro que las coordenadas sean iguales (se superponen) y que no estamos hablando de la misma pieza
-                            flag = True
-                            break
-
-                if not flag: # Si después de comparar igualdad de coordenadas entre distintas piezas no se activó la bandera, significa que no se superponen con ninguna
-                    new_available_actions.append(action)
+            es_valido = control_superposiciones(estado_resultante)
+            if es_valido:
+                new_available_actions.append(action)
 
         return new_available_actions
-
 
 
     def result(self, state, action):
@@ -170,10 +172,10 @@ def jugar(filas, columnas, pisos, salida, piezas, pieza_sacar):
 
 if __name__ == "__main__":
     print(jugar(
-        filas = 3,
+        filas = 2,
         columnas= 3,
         pisos= 1,
-        salida=(1, 2, 2),
-        piezas=[{"id": "pieza_verde", "piso": 1, "partes": [(0,0), (0,1)]}],
-        pieza_sacar="pieza_verde",
+        salida=(0, 0, 0),
+        piezas=[{"id": "pieza_verde", "piso": 0, "partes": [(0,0)]}, {"id": "pieza_azul", "piso": 0, "partes": [(0,1)]},{"id": "pieza_roja", "piso": 0, "partes": [(1,1), (1,2)]},],
+        pieza_sacar="pieza_roja",
     ))
