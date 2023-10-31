@@ -1,4 +1,4 @@
-### Trabajo práctico Inteligencia Artificial
+# Trabajo práctico Inteligencia Artificial
 ## Integrantes:
 * Amerio, Leonardo
 * Merlo, Santiago
