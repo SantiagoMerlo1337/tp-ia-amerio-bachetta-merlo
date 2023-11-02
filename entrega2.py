@@ -46,7 +46,6 @@ def armar_tablero(filas, columnas, pisos, salida, piezas, pieza_sacar):
 
 
     def verificar_superposicion_piezas(variables, values):
-        # print("verificar_superposicion_piezas")
         forma_pieza1 = DICCIONARIO_PIEZAS[variables[0]]
         forma_pieza2 = DICCIONARIO_PIEZAS[variables[1]]
         coord_pieza1 = values[0]
@@ -73,7 +72,6 @@ def armar_tablero(filas, columnas, pisos, salida, piezas, pieza_sacar):
 
     #Verifico que las piezas no se encuentren en el casillero salida
     def verificar_casillero_salida(variables, values):
-        # print("verificar_casillero_salida")
         piso, row, col = values[0]
         forma = DICCIONARIO_PIEZAS[variables[0]]
         lista_partes_pieza = obtener_lista_partes_pieza((piso, row, col), forma)
@@ -87,7 +85,6 @@ def armar_tablero(filas, columnas, pisos, salida, piezas, pieza_sacar):
 
     #Verifica que haya piezas en todos los pisos
     def verificar_piezas_piso(variables, values):
-        # print("verificar_piezas_piso")
         lista_piezas_piso = [coord[0] for coord in values]
         lista_piezas_piso = set(lista_piezas_piso)
         if len(lista_piezas_piso) < pisos:
@@ -99,7 +96,6 @@ def armar_tablero(filas, columnas, pisos, salida, piezas, pieza_sacar):
 
     #Verificar que ningun piso tiene mas del doble de piezas que ningun otro
     def verificar_piezas_dobles_piso(variables, values):
-        # print("verificar_piezas_dobles_piso")
         conteo = {}
         for coord in values:
             piso,_,_ = coord
